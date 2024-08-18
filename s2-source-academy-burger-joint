@@ -1,0 +1,42 @@
+
+// 1
+function biggie_size(combo) {
+    return combo + 4;
+}
+
+// 2
+function unbiggie_size(combo) {
+    return combo - 4;
+}
+
+// 3
+function is_biggie_size(combo) {
+    return combo > 4 ?  true : false;
+}
+
+// 4
+function combo_price(combo) {
+    return is_biggie_size(combo) ? combo_price(unbiggie_size(combo)) + 0.50 : combo * 1.17;
+}
+
+// 5
+function empty_order() {
+    return 0;
+}
+
+// 6
+function add_to_order(order, combo) {
+    return order * 10 + combo;
+}
+
+// 7
+function last_combo(order) {
+    return order < 10 ? order : last_combo(order - 10);
+}
+
+// 8
+function other_combos(order) {
+    return (order - last_combo(order)) / 10;
+}
+
+other_combos(8762);
