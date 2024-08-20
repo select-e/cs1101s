@@ -10,7 +10,7 @@ function unbiggie_size(combo) {
 
 // 3
 function is_biggie_size(combo) {
-    return combo > 4 ?  true : false;
+    return combo > 4;
 }
 
 // 4
@@ -30,12 +30,14 @@ function add_to_order(order, combo) {
 
 // 7
 function last_combo(order) {
-    return order < 10 ? order : last_combo(order - 10);
+    // return order < 10 ? order : last_combo(order - 10);
+    return order % 10;
 }
 
 // 8
 function other_combos(order) {
-    return (order - last_combo(order)) / 10;
+    // return (order - last_combo(order)) / 10;
+    return math_floor(order / 10);
 }
 
-other_combos(8762);
+other_combos(21);
