@@ -27,25 +27,23 @@ remove_duplicates(list(1, 2, 3, 4, 4, 3, 2, 1, 2));
 
 function makeup_amount(x, coins) {
     if (x === 0) {
-        return coins;
+        return list(null);
     } else if (x < 0 || is_null(coins)) {
         return null;
     } else {
-        // display(coins);
         // Combinations that do not use the head coin.
         const combi_A = makeup_amount(x, tail(coins));
         
         // Combinations that do not use the head coin
         // for the remaining amount.
-        // const combi_B = ...
+        const combi_B = makeup_amount(x - head(coins), tail(coins));
         
         // Combinations that use the head coin.
-        const combi_C = pair(head(coins), makeup_amount(x - head(coins), tail(coins)));
+        const combi_C = my_map(y => pair(head(coins), y), combi_B);
         return append(combi_A, combi_C);
     }
 }
 
-makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50));
-// list(null);
+draw_data(makeup_amount(22, list(1, 10, 5, 20, 1, 5, 1, 50)));
 
 
