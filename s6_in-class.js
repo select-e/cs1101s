@@ -22,26 +22,35 @@ function subsets(xs) {
 
 // display_list(subsets(list(1, 2, 3)));
 
+// function permutations(s) {
+//     function swap(xs) {
+//         return is_null(xs)
+//               ? null
+//               : pair(head(xs), replace_head(tail(xs), head(xs)));
+//     }
+//     function replace_head(xs, x) {
+//         return is_null(xs)
+//               ? null
+//               : pair(x, tail(xs));
+//     }
+//     if (is_null(s)) {
+//         return list(null);
+//     }
+//     else {
+//         const permutations_A = map(y => pair(head(s), y),
+//                                   permutations(tail(s)));
+//         const permutations_B = permutations(swap(s));
+//         return append(permutations_A, permutations_B);
+//     }
+// }
+
 function permutations(s) {
-    function swap(xs) {
-        return is_null(xs)
-               ? null
-               : pair(head(xs), replace_head(tail(xs), head(xs)));
-    }
-    function replace_head(xs, x) {
-        return is_null(xs)
-               ? null
-               : pair(x, tail(xs));
-    }
-    if (is_null(s)) {
-        return list(null);
-    }
-    else {
-        const permutations_A = map(y => pair(head(s), y),
-                                   permutations(tail(s)));
-        const permutations_B = permutations(swap(s));
-        return append(permutations_A, permutations_B);
-    }
+    return is_null(s)
+           ? list(null)
+           : accumulate(append, null,
+                map(x => map(p => pair(x, p),
+                                permutations(remove(x, s))),
+                    s));
 }
 
-permutations(list(1, 2, 3));
+display_list(permutations(list(1, 2, 3)));
