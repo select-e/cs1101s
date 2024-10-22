@@ -54,6 +54,26 @@ function make_optimized_search(A) {
     return x => binary_search(A_sorted, x);
 }
 
+// O(n) solution *(if max(arr) < n && min(arr) >= 0)
+
+function make_optimised_search(A) {
+    const B = [];
+    for (let i = 0; i < array_length(A); i = i + 1) {
+        B[A[i]] = 1;
+    }
+    const search = (arr,x) => {
+        return arr[x] !== undefined;
+    };
+    
+    return x => search(B,x);
+}
+
+// Θ(nlogn) solution
+
+// function make_optimised_search(A) {
+//     const len = array_length(A);
+// }
+
 // const tree = make_tree(2, 1, make_tree(3, make_empty_tree(), 4));
 // set_head(tree, make_tree(0, 2, make_empty_tree()));
 // const treeB = list(list(1, 2), list(3, 4));
@@ -68,7 +88,7 @@ function make_optimized_search(A) {
 // // ...
 // my_search(30); // returns false
 
-// 1(i) O(n)
+// 1(i) O(n^2) // O(n) search, Θ(n) list
 // 1(i) O(logn)
 
 
@@ -94,3 +114,9 @@ function bubblesort_list(L) {
 const LL = list(3, 5, 2, 4, 1);
 bubblesort_list(LL);
 LL; // should show [1, [2, [3, [4, [5, null]]]]]
+
+// Time: O(nk)
+// Θ((n-k)k) = Θ(nk - k^2)
+
+// Space: O(nk)
+// Θ((n-k)k) = Θ(nk - k^2))
