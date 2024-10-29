@@ -89,11 +89,15 @@ function S1() {
     return pair(1, S1);
 }
 
+// function S2() {
+//     function iter(x) {
+//         return pair(x, () => iter(x + 1));
+//     }
+//     return iter(1);
+// }
+
 function S2() {
-    function iter(x) {
-        return pair(x, () => iter(x + 1));
-    }
-    return iter(1);
+    return pair(1, () => pair());
 }
 
 eval_stream(S1(), 10);
