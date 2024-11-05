@@ -402,10 +402,6 @@ function list_of_unassigned(symbols) {
 }
 
 function apply_binary(operator, op1, op2) {
-    // CHANGED
-    if (op1 === "*unassigned*" || op2 === "*unassigned*") {
-        error("ReferenceError: Cannot access before initialization");
-    }
     return operator === "+"
            ? op1 + op2
            : operator === "-"
@@ -981,10 +977,6 @@ function lookup_symbol_value(symbol, env) {
 }
 
 function assign_symbol_value(symbol, val, env) {
-    // CHANGED
-    if (val === "*unassigned*") {
-        error("ReferenceError: Cannot access before initialization");
-    }
     function env_loop(env) {
         function scan(symbols, vals) {
             return is_null(symbols)
@@ -1294,12 +1286,12 @@ a;
 
 
 
-// parse_and_evaluate(`
-// const x = y;
-// const y = 42;
-// const z = "***" + x + "***";
-// z;
-// `);
+parse_and_evaluate(`
+const x = y;
+const y = 42;
+const z = "***" + x + "***";
+z;
+`);
 
 // parse_and_evaluate(`
 // y = 1;
