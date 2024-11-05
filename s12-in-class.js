@@ -1286,17 +1286,17 @@ a;
 
 
 
-parse_and_evaluate(`
-const x = y;
-const y = 42;
-const z = "***" + x + "***";
-z;
-`);
-
 // parse_and_evaluate(`
-// y = 1;
+// const x = y;
 // const y = 42;
+// const z = "***" + x + "***";
+// z;
 // `);
+
+parse_and_evaluate(`
+y = 1;
+const y = 42;
+`);
 
 /* 
 In CSE machine:
