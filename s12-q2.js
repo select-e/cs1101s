@@ -384,6 +384,7 @@ else {
 
 // CHANGED
 function check_for_undeclared_names(component, env) {
+    // display("CHECK");
     is_sequence(component)
     ? map(c => check_for_undeclared_names(c, env),
           sequence_statements(component))
@@ -394,6 +395,12 @@ function check_for_undeclared_names(component, env) {
     : is_application(component)
     ? map(c => check_for_undeclared_names(c, env),
           arg_expressions(component))
+    : is_block(component)
+    ? check_for_undeclared_names(block_body(component), env)
+    : is_lambda_expression(component)
+    ? check_for_undeclared_names(lambda_body(component), env)
+    : is_function_declaration(component)
+    ? check_for_undeclared_names(function_body(function_decl_to_constant_decl(component)), env)
     : is_name(component)
     ? lookup_symbol_value(symbol_of_name(component), env)
     : null;
@@ -1147,7 +1154,9 @@ function parse_and_evaluate(string) {
 
 parse_and_evaluate(`
 if (false) {
-    abracadabra(simsalabim);
+    function x() {
+        abracadabra(simsalabim);
+    }
 } else {
     42;
 }
