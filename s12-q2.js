@@ -100,7 +100,7 @@ function evaluate(program) {
                          ),
                     C)); 
         } else if (is_block(command)) {
-            check_for_undeclared_names(C, E); // CHANGED
+            check_for_undeclared_names(block_body(command), E); // CHANGED
             const locals = scan_out_declarations(
                              block_body(command));
             const unassigneds = list_of_unassigned(locals);
@@ -382,12 +382,20 @@ else {
 // scan_out_declarations and list_of_unassigned
 // (SICP JS 4.1.1)
 
+// CHANGED
 function check_for_undeclared_names(component, env) {
     is_sequence(component)
     ? map(c => check_for_undeclared_names(c, env),
           sequence_statements(component))
+    : is_conditional_expression(component) || is_conditional_statement(component)
+    ? map(c => check_for_undeclared_names(c, env),
+          list(conditional_consequent(component), 
+            conditional_alternative(component)))
+    : is_application(component)
+    ? map(c => check_for_undeclared_names(c, env),
+          arg_expressions(component))
     : is_name(component)
-    ? lookup_symbol_value(symbol_of_name(component, env))
+    ? lookup_symbol_value(symbol_of_name(component), env)
     : null;
 }
 
@@ -1138,7 +1146,11 @@ function parse_and_evaluate(string) {
 //parse_and_evaluate("1; 2; 3;");
 
 parse_and_evaluate(`
-false ? abracadabra(simsalabim) : 42;
+if (false) {
+    abracadabra(simsalabim);
+} else {
+    42;
+}
 `);
 
 //parse_and_evaluate("true ? 1 : 2;");
